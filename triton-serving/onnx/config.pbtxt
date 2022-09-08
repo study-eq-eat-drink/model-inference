@@ -1,15 +1,25 @@
-platform: "onnx_plan"
+platform: "onnxruntime_onnx"
 max_batch_size: 8
 input [
   {
-    name: "input"
+    name: "input_1"
     data_type: TYPE_INT32
-    dims: [ 512, 256 ]
+    dims: [ 512 ]
+  },
+  {
+    name: "input_2"
+    data_type: TYPE_INT32
+    dims: [ 512 ]
+  },
+  {
+    name: "input_3"
+    data_type: TYPE_INT32
+    dims: [ 512 ]
   }
 ]
 output [
   {
-    name: "output"
+    name: "dense"
     data_type: TYPE_FP32
     dims: [ 2 ]
   }

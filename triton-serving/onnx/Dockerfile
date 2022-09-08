@@ -1,9 +1,8 @@
-#$ docker run --gpus=1 --rm -p 8000:8000 -p 8001:8001 -p 8002:8002 -v /blar_blar/test_models:/models nvcr.io/nvidia/tritonserver:21.04-py3 tritonserver --model-repository=/models
-FROM nvcr.io/nvidia/tritonserver:21.04-py3
+FROM nvcr.io/nvidia/tritonserver:22.08-py3
 
-RUN mkdir -p /models/nsmc-onnx/0_1
+RUN mkdir -p /models/nsmc-onnx/0
 
-COPY model/onnx/model.onnx /models/nsmc-onnx/0_1/model.onnx
-COPY triton-serving/onnx/config.pbtxt /models/nsmc-onnx/0_1/config.pbtxt
+COPY model/nsmc/onnx/model.onnx /models/nsmc-onnx/0/model.onnx
+COPY triton-serving/onnx/config.pbtxt /models/nsmc-onnx/config.pbtxt
 
-RUN tritonserver --model-repository=/models
+#tritonserver --model-repository=/models
