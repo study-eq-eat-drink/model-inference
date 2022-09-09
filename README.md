@@ -13,3 +13,13 @@
 8. bentoML + pytorch-onnx
 9. akka + tensorflow
 10. akka + triton
+
+# Triton build & run
+## Build
+```bash
+docker build -t benjamin/nsmc/triton-onnx:0.0.1 -f triton-serving/onnx/Dockerfile .
+```
+## Run
+```shell
+docker run --gpus=all -p 9000:8000 -p 9001:8001 -p 9002:8002 --rm benjamin/nsmc/triton-onnx:0.0.1 tritonserver --model-repository=/models
+```
