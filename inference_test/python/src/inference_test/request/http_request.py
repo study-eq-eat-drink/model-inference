@@ -10,17 +10,7 @@ class ManyHTTPRequester:
     def __init__(self, is_async=True, host_count=10):
 
         self.is_async = is_async
-
-        # limit_per_host : 호스트당 최대 연결수
-        # limit : 전체 최대 연결수
-        if is_async:
-            self.tcp_connector = aiohttp.TCPConnector(limit_per_host=host_count, limit=host_count)
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.tcp_connector.close()
+        self.host_count = host_count
 
     def request_all(self, host_url: str, parameters: List[str])->List[str]:
         """
@@ -50,13 +40,15 @@ class ManyHTTPRequester:
 
     async def __request_async(self, host_url: str, parameters: List[str]):
         async_requests = []
+        # limit_per_host : 호스트당 최대 연결수
+        # limit : 전체 최대 연결수
+        async with aiohttp.TCPConnector(limit_per_host=self.host_count, limit=self.host_count) as tcp_connector:
+            for parameter in parameters:
+                async_requests.append(self.__create_request(tcp_connector, host_url, parameter))
+            return await asyncio.gather(*async_requests)
 
-        for parameter in parameters:
-            async_requests.append(self.__create_request(host_url, parameter))
-        return await asyncio.gather(*async_requests)
+    async def __create_request(self,tcp_connector, host_url: str, parameter: str):
 
-    async def __create_request(self, host_url: str, parameter: str):
-        tcp_connector = self.tcp_connector
         async with aiohttp.ClientSession(connector=tcp_connector, connector_owner=False) as session:
             async with session.post(host_url, data=parameter) as response:
                 return await response.text()
