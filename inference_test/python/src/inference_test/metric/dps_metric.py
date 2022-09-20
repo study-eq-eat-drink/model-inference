@@ -43,10 +43,11 @@ class UserBatchDPSMetricTester:
         for user_count, time_result, dps_result, response_result in zip(user_counts, time_results, dps_results, response_results):
             print("=================================")
             print(f"user count : {user_count}")
+            print(f"total request count : {data_count}")
             print(f"total request time : {time_result:.5f} sec")
             print(f"dps : {dps_result} dps")
             # print(f"response_result : {time_result:.5f} sec")
-            # print(response_result[:10] + response_result[:-10])
+            print(response_result[:10] + response_result[:-10])
 
 
 
