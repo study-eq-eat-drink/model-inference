@@ -1,0 +1,34 @@
+platform: "onnxruntime_onnx"
+max_batch_size: 8
+dynamic_batching { }
+input [
+  {
+    name: "input_1"
+    data_type: TYPE_INT32
+    dims: [ 512 ]
+  },
+  {
+    name: "input_2"
+    data_type: TYPE_INT32
+    dims: [ 512 ]
+  },
+  {
+    name: "input_3"
+    data_type: TYPE_INT32
+    dims: [ 512 ]
+  }
+]
+output [
+  {
+    name: "dense"
+    data_type: TYPE_FP32
+    dims: [ 2 ]
+  }
+]
+optimization { execution_accelerators {
+  gpu_execution_accelerator : [ {
+    name : "tensorrt"
+    parameters { key: "precision_mode" value: "FP16" }
+    parameters { key: "max_workspace_size_bytes" value: "1073741824" }
+    }]
+}}
