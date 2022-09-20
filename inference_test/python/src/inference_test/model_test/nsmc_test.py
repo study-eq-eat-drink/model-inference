@@ -1,5 +1,5 @@
 from inference_test.model.nsmc_model import NsmcKoelectraSmallTokenizer
-from inference_test.metric.nsmc_triton_metric import UserBatchDPSMetricTester
+from inference_test.metric.dps_metric import UserBatchDPSMetricTester
 
 import numpy as np
 
