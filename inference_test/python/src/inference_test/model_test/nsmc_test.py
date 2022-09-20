@@ -5,6 +5,7 @@ import numpy as np
 
 import json
 
+import math
 
 class NSMCOnnxTritonTester:
 
@@ -21,9 +22,7 @@ class NSMCOnnxTritonTester:
             test_request_parameters, start_user_count, end_user_count
         )
 
-
     def create_test_request_parameters(self, data_count: int, request_batch_count: int):
-        test_test = "영화 " * 512
         model_inputs = self.create_nsmc_test_model_inputs(data_count)
 
         # triton api request parameter 형식으로 만들기
@@ -39,8 +38,8 @@ class NSMCOnnxTritonTester:
         return triton_request_bodys
 
     def create_nsmc_test_model_inputs(self, data_count: int):
-        test_test = "영화 " * 512
-        model_inputs = NsmcKoelectraSmallTokenizer.tokenize_model_input(test_test)
+        test_text = "영화 " * 512
+        model_inputs = NsmcKoelectraSmallTokenizer.tokenize_model_input(test_text)
 
         model_inputs['input_ids'] = np.repeat(model_inputs['input_ids'], data_count, axis=0)
         model_inputs['attention_mask'] = np.repeat(model_inputs['attention_mask'], data_count, axis=0)
@@ -48,13 +47,13 @@ class NSMCOnnxTritonTester:
 
         return model_inputs
 
-
     def parse_model_inputs_to_triton_parameters(self, input_ids, attention_masks, token_type_ids, batch_size=5):
 
         batch_requests = []
 
         start_idx = 0
-        for idx in range(int(len(input_ids) / batch_size) + 1):
+        request_count = int(math.ceil(len(input_ids) / batch_size))
+        for idx in range(request_count):
             last_idx = start_idx + batch_size
 
             request_parameter = self.get_nsmc_triton_infer_template()
