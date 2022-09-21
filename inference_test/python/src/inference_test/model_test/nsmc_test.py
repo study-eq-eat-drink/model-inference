@@ -16,9 +16,12 @@ class NSMCOnnxTritonTester:
     def run_test(self, data_count: int, request_batch_count: int, start_user_count: int, end_user_count: int):
 
         # 테스트 데이터 만들기
+        print("# create_test_request_parameters...")
         test_request_parameters = self.create_test_request_parameters(data_count, request_batch_count)
 
+        print("# user_batch_metric_test_run...")
         self.user_batch_metric_tester.run_test(
+            data_count,
             test_request_parameters, start_user_count, end_user_count
         )
 
