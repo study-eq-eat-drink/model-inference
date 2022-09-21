@@ -1,5 +1,6 @@
 platform: "onnxruntime_onnx"
-max_batch_size: 16
+max_batch_size: 8
+dynamic_batching { }
 input [
   {
     name: "input_1"
@@ -24,4 +25,10 @@ output [
     dims: [ 2 ]
   }
 ]
-dynamic_batching { }
+optimization { execution_accelerators {
+  gpu_execution_accelerator : [ {
+    name : "tensorrt"
+    parameters { key: "precision_mode" value: "FP16" }
+    parameters { key: "max_workspace_size_bytes" value: "1073741824" }
+    }]
+}}

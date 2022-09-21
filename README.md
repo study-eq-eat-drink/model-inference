@@ -18,8 +18,12 @@
 ## Build
 ```bash
 docker build -t benjamin/nsmc/triton-onnx:0.0.1 -f triton-serving/onnx/Dockerfile .
+docker build -t benjamin/nsmc/triton-onnx-tensorrt:0.0.1 -f triton-serving/onnx-tensorrt/Dockerfile .
 ```
 ## Run
 ```shell
 docker run --gpus=all -p 9000:8000 -p 9001:8001 -p 9002:8002 --rm benjamin/nsmc/triton-onnx:0.0.1 tritonserver --model-repository=/models
+docker run --gpus=all -p 9000:8000 -p 9001:8001 -p 9002:8002 --rm benjamin/nsmc/triton-onnx-tensorrt:0.0.1 tritonserver --model-repository=/models
 ```
+
+

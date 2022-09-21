@@ -9,11 +9,10 @@ class UserBatchDPSMetricTester:
     def __init__(self, host_url: str):
         self.host_url = host_url
 
-    def run_test(self, test_request_list: List[str], start_user_count: int, end_user_count: int):
+    def run_test(self, data_count: int, test_request_list: List[str], start_user_count: int, end_user_count: int):
 
         host_url = self.host_url
 
-        data_count = len(test_request_list)
         triton_request_bodys = test_request_list
 
         time_results = []
@@ -22,6 +21,7 @@ class UserBatchDPSMetricTester:
         user_counts = []
         # 유저 단위 루프
         for user_count in range(start_user_count, end_user_count + 1):
+            print(f"# request user count : {user_count}...")
             request_caller = ManyHTTPRequester(True, user_count)
 
             start_time = time.time()
