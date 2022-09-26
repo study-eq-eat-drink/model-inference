@@ -4,15 +4,12 @@
 # 테스트 조합
 
 1. triton + tensorflow
-2. triton + tensorRT
-3. triton + tensorflow-onnx
-4. triton + pytorch-onnx
-5. bentoML + tensorflow
-6. bentoML + tensorflow-onnx
-7. bentoML + pytorch
-8. bentoML + pytorch-onnx
-9. akka + tensorflow
-10. akka + triton
+2. triton + tensorflow-onnx
+3. triton + tensorflow-onnx-tensorRT
+4. bentoML + tensorflow
+5. bentoML + tensorflow-onnx 
+6. akka + tensorflow
+7. akka + tensorflow-onnx
 
 # Triton build & run
 ## Build
